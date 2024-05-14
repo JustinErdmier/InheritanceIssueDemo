@@ -1,7 +1,25 @@
 ﻿@page "/"
+@using InheritanceIssueDemo.Domain.BookAggregate
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<RadzenText TextStyle="TextStyle.H1" TextAlign="TextAlign.Center" Text="Inheritance Issue Demo" />
 
-Welcome to your new app.
+<RadzenFormField Text="Books">
+    <RadzenDropDown @bind-Value="_selectedBook" Data="@_books" />
+</RadzenFormField>
+
+@code
+{
+    Book? _selectedBook;
+
+    IReadOnlyList<Book> _books = [];
+
+    /// <inheritdoc />
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        _books = await BooksRepository.GetAllAsync();
+    }
+}

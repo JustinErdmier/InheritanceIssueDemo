@@ -6,4 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+        <Folder Include="Domain\Common\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Radzen.Blazor" Version="4.31.4"/>
+    </ItemGroup>
+
 </Project>

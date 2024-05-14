@@ -1,10 +1,13 @@
 using InheritanceIssueDemo.Components;
+using InheritanceIssueDemo.Data;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<IBooksRepository, BooksRepository>();
 
 WebApplication app = builder.Build();
 
