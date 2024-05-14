@@ -2,7 +2,7 @@ namespace InheritanceIssueDemo.Domain.Common.Models;
 
 public abstract class ValueObject : IEquatable<ValueObject>
 {
-    public bool Equals(ValueObject? other) => Equals(obj: (object?)other);
+    public bool Equals(ValueObject? other) => Equals(obj: other);
 
     public abstract IEnumerable<object?> GetEqualityComponents();
 

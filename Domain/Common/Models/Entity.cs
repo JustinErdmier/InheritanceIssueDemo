@@ -9,9 +9,9 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
     protected Entity()
     { }
 #pragma warning restore CS8618
-    public TId Id { get; protected set; }
+    public TId Id { get; }
 
-    public bool Equals(Entity<TId>? other) => Equals(obj: (object?)other);
+    public bool Equals(Entity<TId>? other) => Equals(obj: other);
 
     public override bool Equals(object? obj) => obj is Entity<TId> entity && Id.Equals(entity.Id);
 
