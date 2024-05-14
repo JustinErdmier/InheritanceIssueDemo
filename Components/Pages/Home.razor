@@ -5,21 +5,53 @@
 
 <RadzenText TextStyle="TextStyle.H1" TextAlign="TextAlign.Center" Text="Inheritance Issue Demo" />
 
-<RadzenFormField Text="Books">
-    <RadzenDropDown @bind-Value="_selectedBook" Data="@_books" />
-</RadzenFormField>
+<RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center">
+    @if (_isLoading)
+    {
+        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ProgressBarStyle="ProgressBarStyle.Primary" Size="ProgressBarCircularSize.Large" ShowValue>
+            <Template>
+                Loading
+            </Template>
+        </RadzenProgressBarCircular>
+    }
+    else
+    {
+        <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" Gap="32">
+            <RadzenFormField Text="Books" Style="width: 100%; max-width: 400px;">
+                <RadzenDropDown @bind-Value="_selectedBook" Data="@_books" TextProperty="@nameof(BookDto.Title)" />
+            </RadzenFormField>
+
+            <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" Gap="0">
+                <RadzenText TextStyle="TextStyle.Overline" Text="Selected Book:" />
+                <RadzenText TextStyle="TextStyle.Body1" Text="@DisplayTextForSelectedBook" Style="font-style: italic;" />
+            </RadzenStack>
+        </RadzenStack>
+    }
+</RadzenStack>
 
 @code
 {
-    Book? _selectedBook;
+    bool _isLoading = true;
 
-    IReadOnlyList<Book> _books = [];
+    BookDto? _selectedBook;
+
+    string DisplayTextForSelectedBook => _selectedBook is null ? string.Empty : $"{_selectedBook.Title} with {_selectedBook.NumberOfPages} pages";
+
+    IReadOnlyList<BookDto> _books = [];
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
+        _isLoading = true;
+
         await base.OnParametersSetAsync();
 
-        _books = await BooksRepository.GetAllAsync();
+        IEnumerable<Book> books = await BooksRepository.GetAllAsync();
+
+        _books = books.ToDtos()
+                      .ToList()
+                      .AsReadOnly();
+
+        _isLoading = false;
     }
 }

@@ -5,8 +5,8 @@ namespace InheritanceIssueDemo.Domain.BookAggregate;
 
 public sealed class Book : AggregateRoot<BookId, Guid>
 {
-    private Book(string title, int numberOfPages)
-        : base(id: BookId.CreateUnique())
+    private Book(string title, int numberOfPages, BookId? id = null)
+        : base(id: id ?? BookId.CreateUnique())
     {
         Title         = title;
         NumberOfPages = numberOfPages;
@@ -21,5 +21,5 @@ public sealed class Book : AggregateRoot<BookId, Guid>
 
     public int NumberOfPages { get; set; }
 
-    public static Book Create(string title, int numberOfPages) => new(title, numberOfPages);
+    public static Book Create(string title, int numberOfPages, BookId? id = null) => new(title, numberOfPages, id);
 }
