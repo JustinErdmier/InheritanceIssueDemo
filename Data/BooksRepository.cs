@@ -1,27 +1,24 @@
-﻿using InheritanceIssueDemo.Domain.BookAggregate;
-using InheritanceIssueDemo.Domain.BookAggregate.ValueObjects;
-
-namespace InheritanceIssueDemo.Data;
+﻿namespace InheritanceIssueDemo.Data;
 
 public sealed class BooksRepository : IBooksRepository
 {
-    private readonly List<Book> _books =
-    [
-        Book.Create(title: "Winnie ther Pooh", numberOfPages: 125), Book.Create(title: "Pro ASP.NET Core Identity", numberOfPages: 725),
-        Book.Create(title: "Pro ASP.NET Core MVC 2", numberOfPages: 725), Book.Create(title: "C# 10 in a Nutshell", numberOfPages: 568)
-    ];
+    private readonly AppDbContext _context;
+
+    public BooksRepository(AppDbContext context) => _context = context;
 
     /// <inheritdoc />
     public async Task<bool> AddAsync(Book book)
     {
         await SimulateDelay();
 
-        if (_books.Contains(book))
+        if (_context.Books.Contains(book))
         {
             return false;
         }
 
-        _books.Add(book);
+        _context.Books.Add(book);
+
+        await _context.SaveChangesAsync();
 
         return true;
     }
@@ -31,7 +28,7 @@ public sealed class BooksRepository : IBooksRepository
     {
         await SimulateDelay();
 
-        return _books.FirstOrDefault(book => book.Id == bookId);
+        return await _context.Books.FirstOrDefaultAsync(book => book.Id == bookId);
     }
 
     /// <inheritdoc />
@@ -39,7 +36,7 @@ public sealed class BooksRepository : IBooksRepository
     {
         await SimulateDelay();
 
-        return _books.AsReadOnly();
+        return (await _context.Books.ToListAsync()).AsReadOnly();
     }
 
     /// <inheritdoc />
@@ -47,7 +44,7 @@ public sealed class BooksRepository : IBooksRepository
     {
         await SimulateDelay();
 
-        Book? existingBook = _books.FirstOrDefault(b => b.Id == book.Id);
+        Book? existingBook = await _context.Books.FirstOrDefaultAsync(b => b.Id == book.Id);
 
         if (existingBook is null)
         {
@@ -55,8 +52,10 @@ public sealed class BooksRepository : IBooksRepository
         }
 
         // Just for demo purposes
-        _books.Remove(existingBook);
-        _books.Add(book);
+        _context.Books.Remove(existingBook);
+        _context.Books.Add(book);
+
+        await _context.SaveChangesAsync();
 
         return true;
     }
@@ -66,14 +65,16 @@ public sealed class BooksRepository : IBooksRepository
     {
         await SimulateDelay();
 
-        Book? book = _books.FirstOrDefault(b => b.Id == bookId);
+        Book? book = await _context.Books.FirstOrDefaultAsync(b => b.Id == bookId);
 
         if (book is null)
         {
             return false;
         }
 
-        _books.Remove(book);
+        _context.Books.Remove(book);
+
+        await _context.SaveChangesAsync();
 
         return true;
     }

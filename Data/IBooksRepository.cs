@@ -1,7 +1,4 @@
-﻿using InheritanceIssueDemo.Domain.BookAggregate;
-using InheritanceIssueDemo.Domain.BookAggregate.ValueObjects;
-
-namespace InheritanceIssueDemo.Data;
+﻿namespace InheritanceIssueDemo.Data;
 
 public interface IBooksRepository
 {

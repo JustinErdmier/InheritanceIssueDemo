@@ -1,5 +1,4 @@
-﻿using InheritanceIssueDemo.Domain.BookAggregate.ValueObjects;
-using InheritanceIssueDemo.Domain.Common.Models;
+﻿using InheritanceIssueDemo.Domain.Common.Models;
 
 namespace InheritanceIssueDemo.Domain.BookAggregate;
 
