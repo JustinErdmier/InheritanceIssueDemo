@@ -9,7 +9,8 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
     protected Entity()
     { }
 #pragma warning restore CS8618
-    public TId Id { get; }
+
+    public TId Id { get; protected init; }
 
     public bool Equals(Entity<TId>? other) => Equals(obj: other);
 

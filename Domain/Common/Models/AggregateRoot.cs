@@ -14,5 +14,12 @@ public abstract class AggregateRoot<TId, TIdType> : Entity<TId>
 #pragma warning restore CS8618
     { }
 
-    public new AggregateRootId<TIdType> Id { get; }
+    public new AggregateRootId<TIdType> Id
+    {
+        get => base.Id;
+
+    #pragma warning disable CA1061
+        private init => base.Id = (TId)value;
+    #pragma warning restore CA1061
+    }
 }
