@@ -51,6 +51,7 @@ the database, thus leaving `Entity<TId>.Id` set to `null`.
 
 ### 3 | _branch_ `PassIdToBaseCtorUsingEntityFrameworkCore`
 
-As I suspected, this solution fails when using EF Core.
-
-**More details coming; will update soon.**
+As I suspected, this solution fails when using EF Core. The issue is that EF Core is setting the underlying `AggregateRoot<TId, TIdType>.Id` by convention. This
+put us back to square one, where `Entity<TId>.Id` is `null`. To solve this, I took a similar approach to the constructor. We still need to implement a new
+property for the id in `AggregateRoot<TId, TIdType>` because we're specifying a more derived return type, but we can override the getter and setter so that
+they get and set the value from and on the base class, respectively.
