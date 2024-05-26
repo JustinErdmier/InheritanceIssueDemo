@@ -18,7 +18,7 @@
     {
         <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" Gap="32">
             <RadzenFormField Text="Books" Style="width: 100%; max-width: 400px;">
-                <RadzenDropDown @bind-Value="_selectedBook" Data="@_books" TextProperty="@nameof(BookDto.Title)" />
+                <RadzenDropDown @bind-Value="_selectedBook" Data="@_books" TextProperty="@nameof(Book.Title)" />
             </RadzenFormField>
 
             <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" Gap="0">
