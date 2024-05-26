@@ -14,7 +14,11 @@ public static class BookExtensions
 
     public static BookDto ToDto(this Book book) => BookDto.Create(book.Title, book.NumberOfPages, book.Id.Value);
 
-    public static IEnumerable<Book> ToBooks(this IEnumerable<BookDto> dtos) => dtos.Select(ToBook);
+    public static IList<Book> ToBooks(this IEnumerable<BookDto> dtos) =>
+        dtos.Select(ToBook)
+            .ToList();
 
-    public static IEnumerable<BookDto> ToDtos(this IEnumerable<Book> books) => books.Select(ToDto);
+    public static List<BookDto> ToDtos(this IEnumerable<Book> books) =>
+        books.Select(ToDto)
+             .ToList();
 }

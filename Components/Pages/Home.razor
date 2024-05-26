@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using InheritanceIssueDemo.Domain.BookAggregate
 
 <PageTitle>Home</PageTitle>
 
@@ -33,11 +32,11 @@
 {
     bool _isLoading = true;
 
-    Book? _selectedBook;
+    BookDto? _selectedBook;
 
     string DisplayTextForSelectedBook => _selectedBook is null ? string.Empty : $"{_selectedBook.Title} with {_selectedBook.NumberOfPages} pages";
 
-    IReadOnlyList<Book> _books = [];
+    IReadOnlyList<BookDto> _books = [];
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
@@ -46,7 +45,8 @@
 
         await base.OnParametersSetAsync();
 
-        _books = await BooksRepository.GetAllAsync();
+        _books = (await BooksRepository.GetAllAsync()).ToDtos()
+                                                      .AsReadOnly();
 
         _isLoading = false;
     }
