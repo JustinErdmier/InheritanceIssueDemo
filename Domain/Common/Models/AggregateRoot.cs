@@ -11,8 +11,8 @@ public abstract class AggregateRoot<TId, TIdType> : Entity<TId>
 
 #pragma warning disable CS8618
     protected AggregateRoot()
-    { }
 #pragma warning restore CS8618
+    { }
 
     public new AggregateRootId<TIdType> Id { get; }
 }

@@ -6,8 +6,9 @@ public abstract class EntityId<TId> : ValueObject
 
 #pragma warning disable CS8618
     protected EntityId()
-    { }
 #pragma warning restore CS8618
+    { }
+
     public TId Value { get; }
 
     public override IEnumerable<object?> GetEqualityComponents()
