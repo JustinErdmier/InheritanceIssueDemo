@@ -45,6 +45,6 @@ protected AggregateRoot(TId id)
 ```
 
 While this does appear to resolve the issue in this demo project, I have not been so lucky with one of my more complex projects. I will update soon with
-more information. To try and reproduce this solution not working, I will also be testing this with the **Mapster** library as well as EF Core. What I 
-suspect is happening is that, because EF Core doesn't use the constructor, it _only_ sets `AggregateRoot<TId, TIdType>.Id` when loading the entities from 
+more information. To try and reproduce this solution not working, I will also be testing this with the **Mapster** library as well as EF Core. What I
+suspect is happening is that, because EF Core doesn't use the constructor, it _only_ sets `AggregateRoot<TId, TIdType>.Id` when loading the entities from
 the database, thus leaving `Entity<TId>.Id` set to `null`.
